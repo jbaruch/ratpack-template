@@ -1,0 +1,3 @@
+get('/') {
+   render('index.html')
+}
