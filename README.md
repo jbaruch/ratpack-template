@@ -1,12 +1,10 @@
-Ratpack
-=======
+# Ratpack
 
-A micro web framework for Groovy
---------------------------------
+## A Micro Web Framework for Groovy
 
-Ratpack is inspired by the excellent [Sinatra][] framework for Ruby, and aims to make Groovy web development more classy.
+Ratpack is inspired by the excellent [Sinatra](http://www.sinatrarb.com/) framework for Ruby, and aims to make Groovy web development more classy.
 
-  [Sinatra]: http://www.sinatrarb.com/
+
 
 
 Requirements

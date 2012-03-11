@@ -1,19 +1,12 @@
 apply plugin: 'ratpack'
-apply plugin: 'idea'
-apply plugin: 'eclipse'
 
 buildscript {
   repositories {
     mavenCentral()
-    mavenLocal()
   }
   dependencies {
-    classpath 'com.augusttechgroup:ratpack-plugin:0.5-SNAPSHOT'
+    classpath 'com.augusttechgroup:ratpack-plugin:0.5'
   }
-}
-
-repositories {
-  mavenLocal()
 }
 
 dependencies {
