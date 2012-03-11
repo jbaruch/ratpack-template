@@ -5,122 +5,139 @@
 Ratpack is inspired by the excellent [Sinatra](http://www.sinatrarb.com/) framework for Ruby, and aims to make Groovy web development more classy.
 
 
+## Requirements
+
+ * JDK 6
+ * Nothing else! Ratpack is based on Groovy and Gradle, but the project template will download the correct version of each and cache them locally on your system.
 
 
-Requirements
-------------
+## Getting Started
 
-Groovy 1.7.1+ and Gradle (to build and fetch other dependencies).
+Ratpack is a pre-release framework, but it's mature enough to begin using if you're willing to accept the possibility of breaking changes in the future. Each version of Ratpack is deployed to Maven Central, so you'll always be able to use a released version, even if a future version forces you to have to change your code. (The Ratpack API is so simple that breaking changes are unlikely, but we never say never.)
 
-Getting Started
----------------
+The Ratpack project template gives you the project structure you need to get started. Clone this project or [download the current version](https://github.com/tlberglund/ratpack-template/zipball/master) to get a copy of the files on your system. (It might make more sense to download it, since your project won't maintain version continuity with the template project.)
 
-Ratpack is still *very* beta. But, you can start using it right now.
+The template gives you a file called `src/app/resources/scripts/app.groovy`, which looks like this:
 
-To easily run your app from the command line, build the Ratpack project and add the binary to your PATH:
+```
+  get("/") {
+    render('index.html')
+  }
+```
 
-    gradle buildDistro
-    export PATH=$PATH:`pwd`/build/ratpack/bin
+That instructs Ratpack to render the template `index.html` when the `/` URL is accessed. You can find the example template file in `src/app/resources/templates/index.html`. It looks like this:
 
-Here's a basic "Hello, World" app:
+```
+<!DOCTYPE html>
+<html>
+   <head>
+      <title>Ratpack</title>
+   </head>
+   <body>
+      <h1>Welcome to Ratpack</h1>
+   </body>
+</html>
+```
 
-    get("/") {
-    	"Hello, World!"
-    }
+You can run the project with the `jettyRunWar` target as follows:
 
-If you save the above code in `hello.groovy` and run it on the command line, it will start your app in Jetty on port 5000:
-
-    $ ratpack hello.groovy 
-    Starting Ratpack app with config:
-    [port:5000]
-    2011-05-28 07:44:51.408:INFO::Logging to STDERR via org.mortbay.log.StdErrLog
-    2011-05-28 07:44:51.573:INFO::jetty-6.1.24
-    2011-05-28 07:44:52.169:INFO::Started SocketConnector@0.0.0.0:5000
-    ...
+```
+$ gradlew jettyRunWar
+```
 
 You can also use the 'runapp.groovy' script to auto restart your app when there are changes in the directory.
 
     $ groovy scripts/runapp.groovy appdir/hello.groovy appdir
 
-POST and Other Verbs
---------------------
 
-    post("/submit") {
-        // handle form submission here
-    }
+### POST and Other Verbs
 
-    put("/some-resource") {
-        // create the resource
-    }
+```
+  post("/submit") {
+      // handle form submission here
+  }
 
-    delete("/some-resource") {
-        // delete the resource
-    }
+  put("/some-resource") {
+      // create the resource
+  }
 
-    register("propfind", "/some-resource") {
-        // you can register your own verbs
-    }
+  delete('/some-resource') {
+      // delete the resource
+  }
 
-    register(["get", "post"], "/formpage") {
-        // you can register multiple verbs to the same handler
-    }
+  register('propfind', '/some-resource') {
+      // you can register your own verbs
+  }
 
+  register(['get', 'post'], '/formpage') {
+      // you can register multiple verbs to the same handler
+  }
+```
 
-URL Parameters
---------------
+### URL Parameters
 
-You can capture parts of the URL to use in your handler code using the colon character.
-Any parameters that are captured are stored in the `urlparams` map.
+You can capture parts of the URL to use in your handler code using the colon character. Any parameters that are captured are stored in the `urlparams` map.
 
-    get("/person/:personid") {
-        "This is the page for person ${urlparams.personid}"
-    }
+```
+  get('/person/:personid') {
+      "This is the page for person ${urlparams.personid}"
+  }
 
-    get("/company/:companyname/invoice/:invoiceid") {
-        def company = CompanyDAO.getByName(urlparams.companyname)
-        def invoice = company.getInvoice(urlparams.invoiceid)
-        // you get the idea
-    }
+  get("/company/:companyname/invoice/:invoiceid") {
+      def company = CompanyDAO.getByName(urlparams.companyname)
+      def invoice = company.getInvoice(urlparams.invoiceid)
+      // you get the idea
+  }
+```
 
-
-GET and POST Parameters
------------------------
+### GET and POST Parameters
 
 Parameters in the query string or passed in via a `POST` request are available in the `params` map.
 
-    get("/search") {
-        def results = SearchEngine.search(params.q)
-        // etc.
-    }
+```
+  get("/search") {
+    def results = SearchEngine.search(params.q)
+    // etc.
+  }
+```
 
+### Templates
 
-Templates
----------
+Render templates using the `render` method. To specifiy where to load template files from, set the `templateRoot` setting. If the file isn't found in the template root, the renderer will try to load it as a resource from the classpath.
 
-Render templates using the `render` method.
-To specifiy where to load template files from, set the `templateRoot` setting.
-If the file isn't found in the template root, the renderer will try to load it as a resource from the classpath.
+```
+  set 'templateRoot', 'myapp/templates'
+  
+  get("/") {
+      render "homepage.html"
+  }
+```
 
-    set 'templateRoot', 'myapp/templates'
-
-    get("/") {
-        render "homepage.html"
-    }
+Note that the default `templateRoot` is set to `src/app/resources/templates`. You will probably not have to override this.
 
 You can also pass in a map to use in the template.
 
-    get("/page/:pagename") {
-        render "page.html", [name: urlparams.pagename]
-    }
+```
+  get('/page/:pagename') {
+    render('page.html', [name: urlparams.pagename])
+  }
+```
 
-The template syntax is the same as Groovy's [SimpleTemplateEngine][].
-
-  [SimpleTemplateEngine]: http://groovy.codehaus.org/Groovy+Templates
+The template syntax is the same as Groovy's [SimpleTemplateEngine][http://groovy.codehaus.org/Groovy+Templates].
 
 
-The Development Server
-----------------------
+### The Development Server
 
 The default port is 5000, but you can specify another if you wish by adding the following to your app:
 
-    set 'port', 8080
+```
+  set 'port', 8080
+```
+
+You can also override it by adding the following configuration to your `build.gradle` file:
+
+```
+jettyRunWar {
+   httpPort = 8080
+}
+```
