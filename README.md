@@ -118,7 +118,7 @@ You can also pass in a map to use in the template.
   }
 ```
 
-The template syntax is the same as Groovy's [SimpleTemplateEngine][http://groovy.codehaus.org/Groovy+Templates].
+The template syntax is the same as Groovy's [SimpleTemplateEngine](http://groovy.codehaus.org/Groovy+Templates).
 
 
 ### The Development Server
