@@ -45,11 +45,6 @@ You can run the project with the `jettyRunWar` target as follows:
 $ gradlew jettyRunWar
 ```
 
-You can also use the 'runapp.groovy' script to auto restart your app when there are changes in the directory.
-
-    $ groovy scripts/runapp.groovy appdir/hello.groovy appdir
-
-
 ### POST and Other Verbs
 
 ```
