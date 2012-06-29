@@ -19,7 +19,7 @@ The Ratpack project template gives you the project structure you need to get sta
 
 The template gives you a file called `src/app/resources/scripts/app.groovy`, which looks like this:
 
-```
+```groovy
   get("/") {
     render('index.html')
   }
@@ -27,7 +27,7 @@ The template gives you a file called `src/app/resources/scripts/app.groovy`, whi
 
 That instructs Ratpack to render the template `index.html` when the `/` URL is accessed. You can find the example template file in `src/app/resources/templates/index.html`. It looks like this:
 
-```
+```html
 <!DOCTYPE html>
 <html>
    <head>
@@ -41,13 +41,13 @@ That instructs Ratpack to render the template `index.html` when the `/` URL is a
 
 You can run the project with the `jettyRunWar` target as follows:
 
-```
+```bash
 $ gradlew jettyRunWar
 ```
 
 ### POST and Other Verbs
 
-```
+```groovy
   post("/submit") {
       // handle form submission here
   }
@@ -73,7 +73,7 @@ $ gradlew jettyRunWar
 
 You can capture parts of the URL to use in your handler code using the colon character. Any parameters that are captured are stored in the `urlparams` map.
 
-```
+```groovy
   get('/person/:personid') {
       "This is the page for person ${urlparams.personid}"
   }
@@ -89,7 +89,7 @@ You can capture parts of the URL to use in your handler code using the colon cha
 
 Parameters in the query string or passed in via a `POST` request are available in the `params` map.
 
-```
+```groovy
   get("/search") {
     def results = SearchEngine.search(params.q)
     // etc.
@@ -100,7 +100,7 @@ Parameters in the query string or passed in via a `POST` request are available i
 
 Render templates using the `render` method. To specifiy where to load template files from, set the `templateRoot` setting. If the file isn't found in the template root, the renderer will try to load it as a resource from the classpath.
 
-```
+```groovy
   set 'templateRoot', 'myapp/templates'
   
   get("/") {
@@ -112,7 +112,7 @@ Note that the default `templateRoot` is set to `src/app/resources/templates`. Yo
 
 You can also pass in a map to use in the template.
 
-```
+```groovy
   get('/page/:pagename') {
     render('page.html', [name: urlparams.pagename])
   }
@@ -125,13 +125,13 @@ The template syntax is the same as Groovy's [SimpleTemplateEngine](http://groovy
 
 The default port is 5000, but you can specify another if you wish by adding the following to your app:
 
-```
+```groovy
   set 'port', 8080
 ```
 
 You can also override it by adding the following configuration to your `build.gradle` file:
 
-```
+```groovy
 jettyRunWar {
    httpPort = 8080
 }
