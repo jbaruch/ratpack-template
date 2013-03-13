@@ -5,15 +5,15 @@ buildscript {
     mavenCentral()
   }
   dependencies {
-    classpath 'com.augusttechgroup:ratpack-plugin:0.5.1'
+    classpath 'com.augusttechgroup:ratpack:0.6.2'
   }
 }
 
 dependencies {
-  groovy 'org.codehaus.groovy:groovy:1.8.6'
+  groovy 'org.codehaus.groovy:groovy:1.8.8'
 }
 
 task wrapper(type: Wrapper) {
-  gradleVersion = '1.0-milestone-8a'
+  gradleVersion = '1.3'
 }
 
